@@ -1,0 +1,47 @@
+.permit-intel { animation: fadeIn 0.3s ease; }
+.pi-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; gap: 16px; }
+
+.filter-tabs { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+.filter-tab {
+  padding: 7px 16px; border-radius: 99px;
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  color: var(--text-muted); font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-tab:hover { background: var(--bg-card); color: var(--text-primary); }
+.filter-tab.active { background: var(--accent-amber-glow); border-color: var(--border-amber); color: var(--accent-amber); }
+
+.pi-main { display: grid; grid-template-columns: 1fr 380px; gap: 16px; align-items: start; }
+.permit-list { display: flex; flex-direction: column; gap: 8px; }
+
+.permit-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md); padding: 14px 16px;
+  cursor: pointer; transition: all 0.2s;
+}
+.permit-row:hover, .permit-row.selected { background: var(--bg-elevated); border-color: var(--border-mid); }
+.permit-row.flagged { border-left: 3px solid var(--accent-red); }
+.permit-row.review { border-left: 3px solid var(--accent-amber); }
+.permit-row.selected.flagged { border-color: var(--accent-red); box-shadow: var(--shadow-glow-red); }
+
+.permit-row-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+.permit-type-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.permit-detail { position: sticky; top: 0; }
+
+.permit-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+.permit-meta-item { display: flex; flex-direction: column; gap: 3px; }
+.pmi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.pmi-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+
+.flag-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 8px;
+}
+
+@media (max-width: 1100px) { .pi-main { grid-template-columns: 1fr; } }

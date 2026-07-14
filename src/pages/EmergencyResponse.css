@@ -1,0 +1,345 @@
+.emergency-response { animation: fadeIn 0.3s ease; }
+.er-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; gap: 16px; }
+
+.er-timer {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35);
+  padding: 10px 18px; border-radius: var(--radius-md);
+  animation: pulse-red 1.5s infinite;
+}
+.er-timer-label { font-size: 11px; font-weight: 700; color: #f87171; letter-spacing: 0.1em; }
+.er-timer-val { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+
+.active-protocol-banner {
+  background: var(--bg-surface);
+  border: 2px solid;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.apb-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 16px; }
+
+.progress-bar-wrap {
+  height: 4px; background: var(--bg-elevated); border-radius: 2px; overflow: hidden; margin-bottom: 16px;
+}
+.progress-bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+.protocol-steps { display: flex; flex-direction: column; gap: 8px; }
+.protocol-step {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s;
+}
+.protocol-step:hover { border-color: var(--border-mid); }
+.protocol-step.done { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.2); }
+.step-check { flex-shrink: 0; }
+.step-action { font-size: 13px; color: var(--text-primary); line-height: 1.4; }
+.step-action.done { color: var(--text-muted); text-decoration: line-through; }
+.auto-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  background: rgba(6,182,212,0.12); color: var(--accent-cyan);
+  border: 1px solid rgba(6,182,212,0.25); padding: 2px 7px; border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.er-main { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
+
+.protocol-card {
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-left: 3px solid; border-radius: var(--radius-md); padding: 16px;
+  transition: all 0.2s;
+}
+.protocol-card.active { background: var(--bg-elevated); }
+.protocol-card-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.protocol-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.contact-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.contact-row:last-child { border-bottom: none; }
+.contact-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.contact-status.available { background: var(--accent-green); animation: pulse-green 2s infinite; }
+.contact-status.external { background: var(--accent-cyan); }
+
+.call-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25);
+  color: var(--accent-green); padding: 5px 12px; border-radius: 99px;
+  font-size: 12px; font-weight: 500; text-decoration: none; transition: all 0.2s;
+}
+.call-btn:hover { background: rgba(16,185,129,0.2); }
+
+.muster-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.muster-row:last-child { border-bottom: none; }
+.muster-id {
+  width: 36px; height: 36px; background: var(--bg-elevated); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0;
+}
+
+@media (max-width: 1100px) { .er-main { grid-template-columns: 1fr; } }
+
+/* Report Modal Overlay */
+.report-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(3, 6, 15, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.report-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.report-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+/* Printable Safety Audit Sheet */
+.oisd-report-sheet {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 40px;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+.oisd-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 3px double #0f172a;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.oisd-logo {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #0f172a;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.oisd-title {
+  flex: 1;
+}
+
+.oisd-title h2 {
+  font-size: 20px;
+  color: #0f172a;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.oisd-title h3 {
+  font-size: 14px;
+  color: #334155;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.oisd-title p {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.oisd-meta-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.omt-row {
+  display: flex;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.omt-row:last-child {
+  border-bottom: none;
+}
+
+.omt-cell {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.omt-cell.header {
+  background: #f8fafc;
+  font-weight: 700;
+  border-right: 1px solid #cbd5e1;
+  max-width: 150px;
+  color: #334155;
+}
+
+.omt-cell:not(:last-child) {
+  border-right: 1px solid #cbd5e1;
+}
+
+.oisd-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-left: 4px solid #0f172a;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+  color: #0f172a;
+  text-transform: uppercase;
+}
+
+.oisd-text-box {
+  font-size: 13px;
+  color: #334155;
+  text-align: justify;
+  margin-bottom: 16px;
+}
+
+.oisd-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.oisd-act-item {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.oisd-act-check {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.oisd-compliance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.oisd-compliance-table th, .oisd-compliance-table td {
+  border: 1px solid #cbd5e1;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  text-align: left;
+}
+
+.oisd-compliance-table th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #334155;
+}
+
+.status-ok {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.critical-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.oisd-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.oisd-sign-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.sign-line {
+  width: 180px;
+  height: 1px;
+  background: #94a3b8;
+  margin-top: 24px;
+}
+
+.oisd-sign-box span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* Printing styles overrides */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .report-modal-overlay, .report-modal-overlay * {
+    visibility: visible;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .report-modal-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: transparent;
+    padding: 0;
+    overflow: visible;
+  }
+  .report-modal {
+    border: none;
+    box-shadow: none;
+    max-height: none;
+    max-width: 100%;
+    width: 100%;
+    background: transparent;
+  }
+  .oisd-report-sheet {
+    padding: 0;
+  }
+}
+
