@@ -49,39 +49,39 @@ SentinelX unifies IoT sensors, SCADA data, CCTV feeds, permit-to-work logs, work
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                      PRESENTATION LAYER                            │
+│                      PRESENTATION LAYER                             │
 │                                                                     │
-│   Command     Digital    CCTV      Permit      Emergency   AI      │
-│   Center      Twin       Monitor   Intelligence Response   Copilot │
-│   Dashboard   (SVG Map)  (Vision)  (Audit)     (Orchestr.) (Chat)  │
+│   Command     Digital    CCTV      Permit      Emergency   AI       │
+│   Center      Twin       Monitor   Intelligence Response   Copilot  │
+│   Dashboard   (SVG Map)  (Vision)  (Audit)     (Orchestr.) (Chat)   │
 │                                                                     │
-│   React 18 · Recharts · Framer Motion · Custom CSS Design System   │
+│   React 18 · Recharts · Framer Motion · Custom CSS Design System    │
 ├─────────────────────────────────────────────────────────────────────┤
 │                       ACTION LAYER                                  │
 │                                                                     │
-│   🚨 Emergency Response     📄 Regulatory Report    🤖 AI Safety  │
-│      Orchestrator               Generator               Copilot   │
-│   (Auto-evacuate, suspend   (OISD-116, DGFASLI     (Groq LLaMA    │
-│    permits, alert teams)     Form 16, Factory Act)   3.3 70B)      │
+│   🚨 Emergency Response     📄 Regulatory Report    🤖 AI Safety   |
+│      Orchestrator               Generator               Copilot     │
+│   (Auto-evacuate, suspend   (OISD-116, DGFASLI     (Groq LLaMA      │
+│    permits, alert teams)     Form 16, Factory Act)   3.3 70B)       │
 ├─────────────────────────────────────────────────────────────────────┤
 │                   INTELLIGENCE LAYER (Multi-Agent)                  │
 │                                                                     │
 │   ⚡ Compound Risk    📋 Permit         📹 CCTV Vision   📊 RAG   │
-│      Detection           Intelligence      Agent            Agent  │
-│      Engine              Agent                                     │
+│      Detection           Intelligence      Agent            Agent   │
+│      Engine              Agent                                      │
 │                                                                     │
-│   Correlates gas +    Cross-checks      PPE detection,   Historical│
-│   permits + workers   permits vs live   unauthorized     incident  │
-│   + SCADA + weather   plant conditions  entry alerts     patterns  │
+│   Correlates gas +    Cross-checks      PPE detection,   Historical │
+│   permits + workers   permits vs live   unauthorized     incident   │
+│   + SCADA + weather   plant conditions  entry alerts     patterns   │
 ├─────────────────────────────────────────────────────────────────────┤
-│                    DATA INGESTION LAYER                              │
+│                    DATA INGESTION LAYER                             │
 │                                                                     │
-│   🔌 IoT/SCADA        📹 CCTV Feeds     📋 Permit/Shift           │
-│      Connectors           (AI Vision)       Management APIs        │
-│      (Simulated)          (Simulated)       (Simulated)            │
+│   🔌 IoT/SCADA        📹 CCTV Feeds     📋 Permit/Shift            |
+│      Connectors           (AI Vision)       Management APIs         │
+│      (Simulated)          (Simulated)       (Simulated)             │
 │                                                                     │
-│   H2S, CO, Temp,      8 camera feeds     7 work permits,          │
-│   Pressure sensors    with AI detection  shift records             │
+│   H2S, CO, Temp,      8 camera feeds     7 work permits,            │
+│   Pressure sensors    with AI detection  shift records              │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -220,6 +220,26 @@ Result: No alarm                Result: COMPOUND RISK 91/100
                                 → Suspend permit WP-2341
                                 → Alert emergency teams
 ```
+
+### The Mathematical Formula
+
+SentinelX calculates compound risk using an interaction-based risk scoring algorithm that multiplies threat vectors rather than simply adding them, reflecting how hazards compound in reality:
+
+$$R_{\text{compound}} = \min \left( 100, \, R_{\text{sensor\_base}} \times \left( 1 + \sum_{i=1}^{n} \omega_i \cdot \delta_i \right) \times \Phi_{\text{spatial}} \right)$$
+
+Where:
+*   **$R_{\text{sensor\_base}}$**: The primary sensor hazard value normalized to a $0\text{-}100$ scale:
+    $$R_{\text{sensor\_base}} = \max \left( \frac{\text{H2S}_{\text{current}}}{\text{H2S}_{\text{threshold}}}, \, \frac{\text{CO}_{\text{current}}}{\text{CO}_{\text{threshold}}} \right) \times 50$$
+*   **$\omega_i$**: Weight coefficient assigned to compounding factor $i$ (e.g., Worker presence = $0.35$, Process deviation = $0.25$, Active permits = $0.40$).
+*   **$\delta_i$**: Normalized metric or presence indicator ($0$ or $1$) of compounding factor $i$.
+*   **$\Phi_{\text{spatial}}$**: Spatial proximity penalty multiplier based on distance $d$ to hot work locations:
+    $$\Phi_{\text{spatial}} = \begin{cases} 
+      1.5 & \text{if } d < 50\text{m} \\
+      1.2 & \text{if } 50\text{m} \le d \le 100\text{m} \\
+      1.0 & \text{if } d > 100\text{m}
+   \end{cases}$$
+
+---
 
 ---
 
